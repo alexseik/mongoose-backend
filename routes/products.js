@@ -36,7 +36,7 @@ router.post('/', function (req, res, next) {
     if (dto.product === undefined ){
         return res.status(422).send({error:'The product does not contain data.'});
     }
-
+    //TODO also update image
     var productToInsert = new ProductModel({
         ean13 : dto.product.ean13,
         name : dto.product.name,
@@ -52,6 +52,19 @@ router.post('/', function (req, res, next) {
             return next(err);
         }
         return res.json(post);
+    });
+});
+
+router.put('/:id',function(req,res){
+   'use strict';
+    var id = req.params.id;
+    var dto = req.body;
+    //TODO also update image
+    return ProductModel.update(dto.product,function(err){
+        if (err){
+            return res.status(404).send({error: 'The product does not exist.'});
+        }
+        return res.send(200);
     });
 });
 
