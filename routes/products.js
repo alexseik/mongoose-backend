@@ -68,4 +68,15 @@ router.put('/:id',function(req,res){
     });
 });
 
+router.delete('/:id',function(req,res){
+    'use strict';
+    var id = req.params.id;
+    return ProductModel.remove({_id:id},function(err,response){
+        if (err){
+            return res.status(404).send({error: 'The product does not exist.'});
+        }
+        return res.send(301);
+    });
+});
+
 module.exports = router;
