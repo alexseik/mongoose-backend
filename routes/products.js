@@ -16,13 +16,16 @@ router.get('/', function (req, res, next) {
     });
 });
 
-router.get('/:id', function (req, res) {
+router.get('/:id', function (req, res, next) {
     'use strict';
     if (req.params === undefined || req.params.id === undefined) {
         return res.status(422).send({error: 'The product does not contain data.'});
     }
     return ProductModel.findById(req.params.id, function (err, product) {
         if (err) {
+            return next(err);
+        }
+        if (product === null){
             return res.status(404).send({error: 'The product does not exist.'});
         }
         return res.json(product);
@@ -68,11 +71,14 @@ router.put('/:id',function(req,res){
     });
 });
 
-router.delete('/:id',function(req,res){
+router.delete('/:id',function(req,res,next){
     'use strict';
     var id = req.params.id;
     return ProductModel.remove({_id:id},function(err,response){
         if (err){
+            next(err);
+        }
+        if (response !== undefined && response.result !== undefined && response.result.n === 0){
             return res.status(404).send({error: 'The product does not exist.'});
         }
         return res.send(301);
