@@ -6,6 +6,16 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/products');
 var ProductModel = require('../models/products.js');
 
+router.get('/', function (req, res, next) {
+    'use strict';
+    return ProductModel.find(function (err, products) {
+        if (err) {
+            return next(err);
+        }
+        return res.json(products);
+    });
+});
+
 router.post('/', function (req, res, next) {
     'use strict';
     var dto = req.body;
