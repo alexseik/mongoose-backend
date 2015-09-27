@@ -78,7 +78,18 @@ router.put('/:id',function(req,res){
    'use strict';
     var id = req.params.id;
     var dto = req.body;
-    //TODO also update image
+    if (dto.images !== undefined){
+        if (dto.images instanceof Array){
+            dto.product.images = [];
+            for (var idx in dto.images){
+                if (dto.product.images !== undefined){
+                    var imgBuffer = dto.images[idx];
+                    var image = {'data':imgBuffer,'contentType':'img/png'};
+                    dto.product.images.push(image);
+                }
+            }
+        }
+    }
     return ProductModel.update(dto.product,function(err){
         if (err){
             return res.status(404).send({error: 'The product does not exist.'});
