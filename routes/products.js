@@ -39,16 +39,32 @@ router.post('/', function (req, res, next) {
     if (dto.product === undefined ){
         return res.status(422).send({error:'The product does not contain data.'});
     }
-    //TODO also update image
+
+    if (dto.images !== undefined){
+        if (dto.images instanceof Array){
+            dto.product.images = [];
+            for (var idx in dto.images){
+                if (dto.product.images !== undefined){
+                    var imgBuffer = dto.images[idx];
+                    var image = {'data':imgBuffer,'contentType':'img/png'};
+                    dto.product.images.push(image);
+                }
+            }
+        }
+    }
+
     var productToInsert = new ProductModel({
         ean13 : dto.product.ean13,
         name : dto.product.name,
         pvp : dto.product.pvp,
         images: dto.product.images,
         typeProduct : dto.product.typeProduct,
-        createdAt :  new Date(),
-        productImages : dto.product.productImages
+        createdAt :  new Date()
     });
+
+    if (!ProductModel.validate(productToInsert)){
+        return res.status(422).send({error:'The product is malformed.'});
+    }
 
     return ProductModel.create(productToInsert, function (err, post) {
         if (err) {
