@@ -1,4 +1,4 @@
-/*global require,__dirname*/
+/*global require,__dirname,module*/
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -6,9 +6,15 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/products');
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var products = require('./routes/products');
+var customers = require('./routes/customers');
+var invoices= require('./routes/invoices');
+var tickets = require('./routes/tickets');
 
 var app = express();
 
@@ -26,7 +32,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/products', products);
+app.use('/rest/products', products);
+app.use('/rest/customers', customers);
+app.use('/rest/invoices', invoices);
+app.use('/rest/tickets', tickets);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
