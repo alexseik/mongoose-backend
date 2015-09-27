@@ -10,6 +10,10 @@ var ProductSchema = new mongoose.Schema({
         contentType: String
     }],
     typeProduct : String,
+    options: [{
+        name: String,
+        value: mongoose.Schema.Types.Mixed
+    }],
     createdAt : Date,
     updatedAt : { type: Date, default: Date.now }
 });

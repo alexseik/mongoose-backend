@@ -59,6 +59,7 @@ router.post('/', function (req, res, next) {
         pvp : dto.product.pvp,
         images: dto.product.images,
         typeProduct : dto.product.typeProduct,
+        options: dto.product.options,
         createdAt :  new Date()
     });
 
