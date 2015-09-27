@@ -2,8 +2,6 @@
 var express = require('express');
 var router = express.Router();
 
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/products');
 var ProductModel = require('../models/products.js');
 
 router.get('/', function (req, res, next) {
@@ -18,9 +16,6 @@ router.get('/', function (req, res, next) {
 
 router.get('/:id', function (req, res, next) {
     'use strict';
-    if (req.params === undefined || req.params.id === undefined) {
-        return res.status(422).send({error: 'The product does not contain data.'});
-    }
     return ProductModel.findById(req.params.id, function (err, product) {
         if (err) {
             return next(err);
