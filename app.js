@@ -6,8 +6,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var config = require('./config');
+
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/products');
+mongoose.connect(config.get('database.host') + '/' + config.get('database.name'));
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
