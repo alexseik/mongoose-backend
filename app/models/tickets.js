@@ -1,7 +1,7 @@
 /*global require,module*/
 var mongoose = require('mongoose');
-require('../models/products.js');
-require('../models/invoices.js');
+require('./products.js');
+require('./invoices.js');
 
 var TicketRowSchema = new mongoose.Schema({
     product: {type: mongoose.Schema.ObjectId, ref: 'product'},

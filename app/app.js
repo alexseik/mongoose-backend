@@ -6,7 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var config = require('./config');
+var config = require('./../config');
 
 var mongoose = require('mongoose');
 mongoose.connect(config.get('database.host') + '/' + config.get('database.name'));

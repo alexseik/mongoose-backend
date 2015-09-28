@@ -1,6 +1,6 @@
 /*global require, module*/
 var mongoose = require('mongoose');
-require('../models/customers.js');
+require('./customers');
 var InvoidSchema = new mongoose.Schema({
     customer : {type : mongoose.Schema.ObjectId, ref : 'customer'},
     subtotal: Number,
